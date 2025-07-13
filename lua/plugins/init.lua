@@ -12,6 +12,7 @@ return {
       require "configs.lspconfig"
     end,
   },
+
   {
     "tpope/vim-fugitive",
     -- These commands will be loaded earlier than lazy load.
@@ -26,4 +27,4 @@ return {
       require("configs.lint")
     end,
   },
-
+}
