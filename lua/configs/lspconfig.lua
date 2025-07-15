@@ -1,10 +1,3 @@
--- require("nvchad.configs.lspconfig").defaults()
---
--- local servers = { "html", "cssls" }
--- vim.lsp.enable(servers)
---
--- read :h vim.lsp.config for changing options of lsp servers 
---
 local lspconfig = require("lspconfig")
 
 -- 공통 설정
@@ -25,9 +18,9 @@ local servers = {
       python = {
         analysis = {
           typeCheckingMode = "basic", -- "off", "basic", "strict"
-          diagnosticMode = "openFilesOnly", -- or "workspace"
-          autoSearchPaths = true,
-          useLibraryCodeForTypes = true,
+          -- diagnosticMode = "workspace", -- or "workspace"
+          -- autoSearchPaths = true,
+          -- useLibraryCodeForTypes = true,
         },
       },
     },
