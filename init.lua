@@ -32,6 +32,7 @@ dofile(vim.g.base46_cache .. "statusline")
 require "options"
 require "autocmds"
 
+-- The mappings always work normally because they alwayse be loaded at last.
 vim.schedule(function()
   require "mappings"
 end)

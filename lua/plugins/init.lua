@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
+    event = 'BufWritePre', -- uncomment for format on save
     opts = require "configs.conform",
   },
 
@@ -13,16 +13,18 @@ return {
     end,
   },
 
-  -- test new blink
-  -- { import = "nvchad.blink.lazyspec" },
+  {
+    "tpope/vim-fugitive",
+    -- These commands will be loaded earlier than lazy load.
+    cmd = { "Git", "Gvdiffsplit", "Gdiffsplit", "Gllog", "G", "Gedit", "Gblame" },   
+  },
 
-  -- {
-  -- 	"nvim-treesitter/nvim-treesitter",
-  -- 	opts = {
-  -- 		ensure_installed = {
-  -- 			"vim", "lua", "vimdoc",
-  --      "html", "css"
-  -- 		},
-  -- 	},
-  -- },
+  -- ~/.config/nvim/lua/plugins/lint.lua
+  {
+    "mfussenegger/nvim-lint",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("configs.lint")
+    end,
+  },
 }
