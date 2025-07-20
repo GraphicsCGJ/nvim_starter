@@ -1,12 +1,12 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = {
-  "pyright",
-  "eslint",
-  "html",
-  "cssls",
-  "clangd",
-}
+-- local servers = {
+--   "pyright",
+--   "eslint",
+--   "html",
+--   "cssls",
+--   "clangd",
+-- }
 
 -- lspconfig.pyright.setup {
 --   on_attach = on_attach,
@@ -38,14 +38,14 @@ local servers = {
 -- })
 --
 --
-vim.lsp.enable(servers)
+-- vim.lsp.enable(servers)
 
 require('lspconfig').pyright.setup{
   root_dir = function(fname)
     return require('lspconfig.util').root_pattern('setup.py', 'pyproject.toml')(fname)
       or vim.fn.getcwd()
   end,
-  on_attach = on_attach,
+  -- on_attach = on_attach,
   settings = 
     {
       pyright = {
