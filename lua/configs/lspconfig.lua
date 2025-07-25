@@ -10,13 +10,13 @@ require("nvchad.configs.lspconfig").defaults()
 
 -- lspconfig.pyright.setup {
 --   on_attach = on_attach,
---   settings = 
+--   settings =
 --   {
 --     pyright = {
 --       autoImportCompletion = true,
 --     },
 --     python = {
---       analysis = 
+--       analysis =
 --         autoSearchPaths = true,diagnosticMode = 'openFilesOnly',useLibraryCodeForTypes = true,typeCheckingMode = 'off'
 --     }
 --   }
@@ -39,26 +39,28 @@ require("nvchad.configs.lspconfig").defaults()
 --
 --
 -- vim.lsp.enable(servers)
-
-require('lspconfig').pyright.setup{
+require('lspconfig').eslint.setup {}
+require('lspconfig').html.setup {}
+require('lspconfig').cssls.setup {}
+require('lspconfig').clangd.setup {}
+require('lspconfig').pyright.setup {
   root_dir = function(fname)
     return require('lspconfig.util').root_pattern('setup.py', 'pyproject.toml')(fname)
-      or vim.fn.getcwd()
+        or vim.fn.getcwd()
   end,
   -- on_attach = on_attach,
-  settings = 
-    {
-      pyright = {
-        autoImportCompletion = true,
-      },
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          diagnosticMode = 'openFilesOnly',
-          useLibraryCodeForTypes = true,
-          typeCheckingMode = 'off'
-        }
+  settings =
+  {
+    pyright = {
+      autoImportCompletion = true,
+    },
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = 'openFilesOnly',
+        useLibraryCodeForTypes = true,
+        typeCheckingMode = 'off'
       }
     }
+  }
 }
-
