@@ -32,6 +32,10 @@ vim.opt.relativenumber = true
 require("conform").setup({
   formatters_by_ft = {
     python = { "ruff_format" }, -- ruff가 black 대체
+    javascript = { "prettier" },        -- .js
+    javascriptreact = { "prettier" },   -- .jsx
+    typescript = { "prettier" },        -- .ts
+    typescriptreact = { "prettier" },   -- .tsx
   },
   format_on_save = {
     timeout_ms = 500,

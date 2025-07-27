@@ -1,5 +1,9 @@
 require("nvchad.configs.lspconfig").defaults()
 
+vim.lsp.enable('pyright')
+vim.lsp.enable('eslint')
+vim.lsp.enable('clangd')
+
 -- local servers = {
 --   "pyright",
 --   "eslint",
@@ -39,28 +43,28 @@ require("nvchad.configs.lspconfig").defaults()
 --
 --
 -- vim.lsp.enable(servers)
-require('lspconfig').eslint.setup {}
-require('lspconfig').html.setup {}
-require('lspconfig').cssls.setup {}
-require('lspconfig').clangd.setup {}
-require('lspconfig').pyright.setup {
-  root_dir = function(fname)
-    return require('lspconfig.util').root_pattern('setup.py', 'pyproject.toml')(fname)
-        or vim.fn.getcwd()
-  end,
-  -- on_attach = on_attach,
-  settings =
-  {
-    pyright = {
-      autoImportCompletion = true,
-    },
-    python = {
-      analysis = {
-        autoSearchPaths = true,
-        diagnosticMode = 'openFilesOnly',
-        useLibraryCodeForTypes = true,
-        typeCheckingMode = 'off'
-      }
-    }
-  }
-}
+-- require('lspconfig').eslint.setup {}
+-- require('lspconfig').html.setup {}
+-- require('lspconfig').cssls.setup {}
+-- require('lspconfig').clangd.setup {}
+-- require('lspconfig').pyright.setup {
+--   root_dir = function(fname)
+--     return require('lspconfig.util').root_pattern('setup.py', 'pyproject.toml')(fname)
+--         or vim.fn.getcwd()
+--   end,
+--   -- on_attach = on_attach,
+--   settings =
+--   {
+--     pyright = {
+--       autoImportCompletion = true,
+--     },
+--     python = {
+--       analysis = {
+--         autoSearchPaths = true,
+--         diagnosticMode = 'openFilesOnly',
+--         useLibraryCodeForTypes = true,
+--         typeCheckingMode = 'off'
+--       }
+--     }
+--   }
+-- }
