@@ -10,7 +10,7 @@ require "nvchad.options"
 --------------------------------------------
 --
 -- GJ Added. for vim(nvim) configuration.
--- 
+--
 --------------------------------------------
 --------------------------------------------
 --------------------------------------------
@@ -20,22 +20,22 @@ vim.opt.relativenumber = true
 --------------------------------------------
 --------------------------------------------
 --
--- GJ Added. for LSP !! 
--- 
+-- GJ Added. for LSP !!
+--
 --------------------------------------------
 --------------------------------------------
 --------------------------------------------
 
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
--- FOR PYTHON 
+-- FOR PYTHON
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 require("conform").setup({
   formatters_by_ft = {
-    python = { "ruff_format" }, -- ruff가 black 대체
-    javascript = { "prettier" },        -- .js
-    javascriptreact = { "prettier" },   -- .jsx
-    typescript = { "prettier" },        -- .ts
-    typescriptreact = { "prettier" },   -- .tsx
+    python = { "ruff_format" },       -- ruff가 black 대체
+    javascript = { "prettier" },      -- .js
+    javascriptreact = { "prettier" }, -- .jsx
+    typescript = { "prettier" },      -- .ts
+    typescriptreact = { "prettier" }, -- .tsx
   },
   format_on_save = {
     timeout_ms = 500,
@@ -44,7 +44,7 @@ require("conform").setup({
 })
 
 require("lint").linters_by_ft = {
- python = { "ruff" },
+  python = { "ruff" },
 }
 
 -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -54,5 +54,3 @@ require("lint").linters_by_ft = {
 -- })
 
 --------------------------------------------
-
-
