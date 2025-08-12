@@ -29,9 +29,9 @@ map("n", "<leader>gD", function()
   end)
 end, { desc = "Git diff with N commits ago" })
 -- 2. blame
-map("n", "<leader>gb", ":Git blame<CR>", { desc = "Git blame of this file"})
+map("n", "<leader>gb", ":Git blame<CR>", { desc = "Git blame of this file" })
 -- 3. edit (open Ex version of file)
-map("n", "<leader>ge", ":Gedit<CR>", { desc = "Git edit of this file"})
+map("n", "<leader>ge", ":Gedit<CR>", { desc = "Git edit of this file" })
 map("n", "<leader>gE", function()
   vim.ui.input({ prompt = "How many commits back? (e.g. 1, 2, 3): " }, function(input)
     if input and tonumber(input) then
@@ -41,6 +41,13 @@ map("n", "<leader>gE", function()
       print("Invalid Number")
     end
   end)
-end, { desc = "Git edit of this file"})
+end, { desc = "Git edit of this file" })
 -- 4. log
 map("n", "<leader>gl", ":Gllog<CR>", { desc = "Git log (current file)" })
+
+
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- for register settings.
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+map("n", "<leader>rs", ":reg 0 z x c v<CR>", { desc = "Show my registers" })
