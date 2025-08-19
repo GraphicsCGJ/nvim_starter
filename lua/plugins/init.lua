@@ -1,8 +1,24 @@
 return {
   {
     "stevearc/conform.nvim",
-    event = 'BufWritePre', -- uncomment for format on save
-    opts = require "configs.conform",
+    event = 'BufWritePre',
+    opts = {
+      {
+        lua = { "stylua" },
+        python = { "autopep8" },
+      },
+      default_format_opts = {
+        lsp_format = "fallback",
+      },
+      format_on_save = {
+        timeout_ms = 500,
+      },
+      formatters = {
+        autopep8 = {
+          args = { '--max-line-length=200' }
+        }
+      }
+    }
   },
 
   -- These are some examples, uncomment them if you want to see them work!
