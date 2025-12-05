@@ -51,3 +51,8 @@ map("n", "<leader>gl", ":Gllog<CR>", { desc = "Git log (current file)" })
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 map("n", "<leader>rs", ":reg 0 z x c v<CR>", { desc = "Show my registers" })
+
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- for code action settings.
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
