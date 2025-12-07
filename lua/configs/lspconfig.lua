@@ -10,6 +10,9 @@ vim.lsp.enable('solidity_ls_nomicfoundation')
 vim.lsp.enable('mesonlsp')
 vim.lsp.enable("vtsls")
 
+vim.lsp.enable("html")
+vim.lsp.enable("cssls")
+
 -- vim.lsp.enable('typescript-language-server')
 -- vim.lsp.enable("tsserver")
 

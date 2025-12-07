@@ -14,8 +14,12 @@ require "nvchad.options"
 --------------------------------------------
 --------------------------------------------
 --------------------------------------------
+require("nvim-treesitter.configs").setup({
+  autotag = {
+    enable = true,
+  },
+})
 
-vim.opt.relativenumber = true
 --------------------------------------------
 --------------------------------------------
 --------------------------------------------
@@ -46,6 +50,9 @@ require("conform").setup({
 require("lint").linters_by_ft = {
   python = { "ruff" },
 }
+
+vim.opt.relativenumber = true
+
 
 -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 --   callback = function()

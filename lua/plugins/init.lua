@@ -89,5 +89,26 @@ return {
         },
       })
     end,
+  },
+  {
+  "windwp/nvim-ts-autotag",
+  dependencies = { "nvim-treesitter/nvim-treesitter" },
+  config = function()
+    require("nvim-treesitter.configs").setup({
+      autotag = {
+        enable = true,
+        filetypes = {
+          "html",
+          "javascript",
+          "javascriptreact",
+          "typescriptreact",
+          "tsx",
+          "jsx",
+          "xml",
+          "markdown",
+        },
+      },
+    })
+   end,
   }
 }
