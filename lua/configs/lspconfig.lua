@@ -8,3 +8,9 @@ vim.lsp.config('clangd', require("lsp.clangd"))
 vim.lsp.enable('clangd')
 vim.lsp.enable('solidity_ls_nomicfoundation')
 vim.lsp.enable('mesonlsp')
+vim.lsp.enable("vtsls")
+
+-- vim.lsp.enable('typescript-language-server')
+-- vim.lsp.enable("tsserver")
+
+
