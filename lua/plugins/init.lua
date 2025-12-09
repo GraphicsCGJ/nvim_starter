@@ -91,24 +91,37 @@ return {
     end,
   },
   {
-  "windwp/nvim-ts-autotag",
-  dependencies = { "nvim-treesitter/nvim-treesitter" },
-  config = function()
-    require("nvim-treesitter.configs").setup({
-      autotag = {
-        enable = true,
-        filetypes = {
-          "html",
-          "javascript",
-          "javascriptreact",
-          "typescriptreact",
-          "tsx",
-          "jsx",
-          "xml",
-          "markdown",
+    "windwp/nvim-ts-autotag",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        autotag = {
+          enable = true,
+          filetypes = {
+            "html",
+            "javascript",
+            "javascriptreact",
+            "typescriptreact",
+            "tsx",
+            "jsx",
+            "xml",
+            "markdown",
+          },
         },
-      },
-    })
-   end,
+      })
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("treesitter-context").setup({
+        enable = true,
+        max_lines = 3,
+        trim_scope = 'outer',
+        min_window_height = 0,
+        line_numbers = true,
+      })
+    end
   }
 }
