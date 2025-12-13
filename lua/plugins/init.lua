@@ -91,27 +91,6 @@ return {
     end,
   },
   {
-    "windwp/nvim-ts-autotag",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        autotag = {
-          enable = true,
-          filetypes = {
-            "html",
-            "javascript",
-            "javascriptreact",
-            "typescriptreact",
-            "tsx",
-            "jsx",
-            "xml",
-            "markdown",
-          },
-        },
-      })
-    end,
-  },
-  {
     "nvim-treesitter/nvim-treesitter-context",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
@@ -123,5 +102,59 @@ return {
         line_numbers = true,
       })
     end
-  }
+  },
+  {
+    "windwp/nvim-ts-autotag",
+    -- ft = {
+    --   "javascript",
+    --   "javascriptreact",
+    --   "typescript",
+    --   "typescriptreact",
+    --   "tsx",
+    --   "jsx",
+    -- },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      require("nvim-ts-autotag").setup({
+        per_filetype = {
+          html = {
+            opts = {
+              enable_close = true,
+              enable_rename = true,
+              enable_close_on_slash = true,
+            },
+          },
+          javascript = {
+            opts = {
+              enable_close = true,
+              enable_rename = true,
+              enable_close_on_slash = true,
+            },
+          },
+          javascriptreact = {
+            opts = {
+              enable_close = true,
+              enable_rename = true,
+              enable_close_on_slash = true,
+            },
+          },
+          typescript = {
+            opts = {
+              enable_close = true,
+              enable_rename = true,
+              enable_close_on_slash = true,
+            },
+          },
+          typescriptreact = {
+            opts = {
+              enable_close = true,
+              enable_rename = true,
+              enable_close_on_slash = true,
+            },
+          },
+        },
+      })
+    end,
+  },
+
 }
