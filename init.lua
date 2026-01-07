@@ -36,3 +36,6 @@ require "autocmds"
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Added to force the background color black.
+vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
