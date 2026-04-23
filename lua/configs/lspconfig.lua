@@ -1,3 +1,5 @@
+vim.env.PATH = vim.fn.stdpath("data") .. "/mason/bin:" .. vim.env.PATH
+
 require("nvchad.configs.lspconfig").defaults()
 
 vim.lsp.config('pyright', require("lsp.pyright"))
@@ -8,6 +10,10 @@ vim.lsp.config("eslint", require("lsp.eslint"))
 vim.lsp.enable('eslint')
 vim.lsp.config('clangd', require("lsp.clangd"))
 vim.lsp.enable('clangd')
+vim.lsp.config('jdtls', require("lsp.jdtls"))
+vim.lsp.enable('jdtls')
+vim.lsp.config('yaml-language-server', require("lsp.yamlls"))
+vim.lsp.enable('yaml-language-server')
 vim.lsp.enable('solidity_ls_nomicfoundation')
 vim.lsp.enable('mesonlsp')
 vim.lsp.enable("vtsls")
