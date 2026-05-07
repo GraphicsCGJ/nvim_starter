@@ -19,6 +19,8 @@ vim.lsp.enable('yaml-language-server')
 vim.lsp.enable('solidity_ls_nomicfoundation')
 vim.lsp.enable('mesonlsp')
 vim.lsp.enable("vtsls")
+vim.lsp.config('jinja_lsp', require("lsp.jinja_lsp"))
+vim.lsp.enable('jinja_lsp')
 
 vim.lsp.enable("html")
 vim.lsp.enable("cssls")
