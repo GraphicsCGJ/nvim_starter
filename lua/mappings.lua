@@ -44,6 +44,11 @@ map("n", "<leader>gE", function()
 end, { desc = "Git edit of this file" })
 -- 4. log
 map("n", "<leader>gl", ":Gllog<CR>", { desc = "Git log (current file)" })
+-- 5. hunk navigation (stay in current buffer, no diff split)
+map("n", "]h", function() require("gitsigns").nav_hunk("next") end, { desc = "Next git hunk" })
+map("n", "[h", function() require("gitsigns").nav_hunk("prev") end, { desc = "Prev git hunk" })
+map("n", "<leader>gp", function() require("gitsigns").preview_hunk() end, { desc = "Preview hunk (floating)" })
+map("n", "<leader>gP", function() require("gitsigns").preview_hunk_inline() end, { desc = "Preview hunk (inline)" })
 
 
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
