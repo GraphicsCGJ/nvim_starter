@@ -26,3 +26,16 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 --   vim.fn.setreg("a", vim.fn.getreg("a") .. vim.fn.getreg("0"))
 --  end
 --})
+
+-- 저장 직전 trailing whitespace 제거 (markdown 제외: 줄끝 2공백 = <br>)
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    if vim.bo[args.buf].filetype == "markdown" then
+      return
+    end
+    local save = vim.fn.winsaveview()
+    vim.cmd([[silent! keeppatterns %s/\s\+$//e]])
+    vim.fn.winrestview(save)
+  end,
+})
