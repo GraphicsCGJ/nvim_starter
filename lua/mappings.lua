@@ -61,3 +61,10 @@ map("n", "<leader>rs", ":reg 0 z x c v<CR>", { desc = "Show my registers" })
 -- for code action settings.
 -- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'LSP Code Action' })
+
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- jumplist navigation
+-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+-- <C-i> is stolen by NvChad's <Tab> (buffer next) since Tab==C-i in terminals.
+-- Keep Tab for buffer switching; use <C-p> for jumplist forward (pairs with <C-o> back).
+map("n", "<C-p>", "<C-i>", { desc = "Jump forward (jumplist)" })
