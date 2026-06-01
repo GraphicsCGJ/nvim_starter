@@ -62,16 +62,13 @@ nvim                       # 첫 실행 시 lazy.nvim 이 lazy-lock.json 에 고
 
 ### 2. Mason 도구 — `lazy-lock.json 에 포함되지 않음`
 
-LSP 서버 / 린터 / 포맷터는 Mason 이 따로 설치하며 git 으로 추적되지 않는다.
-새 머신에서는 nvim 안에서 아래를 실행해 한 번에 설치한다:
+LSP 서버 / 린터 / 포맷터는 Mason 이 따로 설치하며 `lazy-lock.json` 에는 잡히지 않는다.
+대신 `WhoIsSethDaniel/mason-tool-installer.nvim` 의 `ensure_installed` 목록
+(`lua/plugins/init.lua`)으로 git 관리되며, **nvim 실행 시 누락된 도구가 자동 설치**된다.
 
-```vim
-:MasonInstall bash-language-server beautysh clangd css-lsp docker-compose-language-service docker-language-server dockerfile-language-server eslint-lsp eslint_d gofumpt goimports golangci-lint golangci-lint-langserver google-java-format gopls html-lsp isort jdtls jinja-lsp kotlin-debug-adapter kotlin-language-server ktfmt ktlint lua-language-server marksman mesonlsp pyright ruff rust-analyzer vtsls yaml-language-server yamlfix yamlfmt yamllint
-```
-
-> 도구를 추가/제거하면 위 목록도 같이 갱신할 것.
-> (완전 자동화를 원하면 `WhoIsSethDaniel/mason-tool-installer.nvim` 플러그인에
-> `ensure_installed` 목록을 두면 nvim 실행 시 자동 설치되어 이 목록도 git 으로 관리된다.)
+- 새 머신: nvim 을 한 번 켜면 끝. (필요하면 `:MasonToolsInstall` 수동 실행)
+- 도구 추가/제거: `lua/plugins/init.lua` 의 `ensure_installed` 만 수정 (이 README 갱신 불필요).
+- 일괄 업데이트: `:MasonToolsUpdate` (또는 spec 에서 `auto_update = true`).
 
 # Credits
 

@@ -29,6 +29,56 @@ return {
     end,
   },
 
+  -- Mason 도구(LSP/포매터/린터 바이너리) 자동 설치. 이 목록이 single source of truth.
+  -- 도구를 추가/제거하면 아래 ensure_installed 만 고치면 된다 (README 별도 갱신 불필요).
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "williamboman/mason.nvim" },
+    event = "VeryLazy",
+    config = function()
+      require("mason-tool-installer").setup({
+        ensure_installed = {
+          "bash-language-server",
+          "beautysh",
+          "clangd",
+          "css-lsp",
+          "docker-compose-language-service",
+          "docker-language-server",
+          "dockerfile-language-server",
+          "eslint-lsp",
+          "eslint_d",
+          "gofumpt",
+          "goimports",
+          "golangci-lint",
+          "golangci-lint-langserver",
+          "google-java-format",
+          "gopls",
+          "html-lsp",
+          "isort",
+          "jdtls",
+          "jinja-lsp",
+          "kotlin-debug-adapter",
+          "kotlin-language-server",
+          "ktfmt",
+          "ktlint",
+          "lua-language-server",
+          "marksman",
+          "mesonlsp",
+          "pyright",
+          "ruff",
+          "rust-analyzer",
+          "vtsls",
+          "yaml-language-server",
+          "yamlfix",
+          "yamlfmt",
+          "yamllint",
+        },
+        run_on_start = true,
+        auto_update = false,
+      })
+    end,
+  },
+
   {
     "tpope/vim-fugitive",
     -- These commands will be loaded earlier than lazy load.
