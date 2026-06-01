@@ -3,6 +3,10 @@ local lint = require("lint")
 
 lint.linters_by_ft = {
   python = { "ruff" },
+  go     = { "golangci-lint" },
+  kotlin = { "ktlint" },
+  yaml   = { "yamllint" },
+  rust   = { "bacon" },
 }
 
 -- 자동 lint 실행 (저장 후)
