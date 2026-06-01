@@ -6,7 +6,6 @@ lint.linters_by_ft = {
   go     = { "golangci-lint" },
   kotlin = { "ktlint" },
   yaml   = { "yamllint" },
-  rust   = { "bacon" },
 }
 
 -- 자동 lint 실행 (저장 후)
