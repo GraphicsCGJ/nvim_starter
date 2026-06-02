@@ -21,6 +21,16 @@ return {
     }
   },
 
+  -- nvim-treesitter: pin to the (archived) `master` branch.
+  -- lua/options.lua uses the classic `require("nvim-treesitter.configs").setup{}` API,
+  -- which only exists on `master`. The repo's default branch is now `main` (a rewrite
+  -- that dropped that module), so fresh installs drift to `main` and break startup.
+  -- This override keeps every machine on the API this config expects.
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "master",
+  },
+
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
