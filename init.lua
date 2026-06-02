@@ -38,4 +38,4 @@ vim.schedule(function()
 end)
 
 -- Added to force the background color black.
-vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
