@@ -6,7 +6,13 @@
 local M = {}
 
 M.base46 = {
-	theme = "seoul256_light",
+	theme = "flexoki-light",
+
+	hl_override = {
+		-- flex-light: 기본 TelescopeSelection 음영(#f2efe4)이 배경(#FFFCF0)과
+		-- 거의 같아서 find 선택줄이 안 보임 → 대비 있는 색으로 덮어씀
+		TelescopeSelection = { bg = "#d6d4ca" },
+	},
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },

@@ -37,6 +37,40 @@
 - **포맷터 추가**: Mason 으로 도구 설치 후 `options.lua` 의 `formatters_by_ft` 에 `ft = { "tool" }` 추가.
 - Mason 설치 도구는 `lspconfig.lua` 첫 줄에서 PATH(`mason/bin`)에 추가됨.
 
+# 테마 색 커스터마이즈 (base46 캐시 재컴파일)
+
+`chadrc.lua` 의 `theme` 이나 `hl_override` (하이라이트 색 덮어쓰기)를 **바꿔도 nvim 을
+재시작하는 것만으로는 반영되지 않는다.** NvChad 는 색을 매번 계산하지 않고
+`~/.local/share/nvim/base46/` 에 **컴파일된 캐시**로 저장해두고, 캐시가 있으면 그대로
+쓰기 때문이다. 그래서 캐시를 강제로 다시 굽기 전까지는 예전 색이 계속 적용된다.
+
+저장 후 아래 중 하나로 캐시를 재컴파일하면 즉시 반영된다.
+
+```vim
+:lua require('base46').load_all_highlights()   " nvim 안에서: 재컴파일 + 즉시 적용
+```
+
+```bash
+# nvim 밖에서(headless): 캐시만 다시 굽고 종료. 다음 실행부터 반영
+nvim --headless "+lua require('base46').load_all_highlights()" +qa
+```
+
+> 막혔을 때는 캐시를 통째로 지워도 된다 (`rm -rf ~/.local/share/nvim/base46`).
+> 다음 nvim 실행 시 자동으로 새로 컴파일된다.
+
+**예시 — `hl_override` 로 색 덮어쓰기** (`lua/chadrc.lua`):
+
+```lua
+M.base46 = {
+  theme = "flexoki-light",
+  hl_override = {
+    -- flexoki-light: 기본 선택줄 음영(#f2efe4)이 배경(#FFFCF0)과 거의 같아
+    -- find(<leader>ff) 선택줄이 안 보임 → 대비 있는 색으로 덮어씀
+    TelescopeSelection = { bg = "#d6d4ca" },
+  },
+}
+```
+
 # 새 머신에서 재현 (Fresh install)
 
 설정은 **두 층**으로 나뉘고, git 으로 추적되는 범위가 다르다.
