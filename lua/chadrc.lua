@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "flexoki-light",
+	theme = "one_light",
 
 	hl_override = {
 		-- flex-light: 기본 TelescopeSelection 음영(#f2efe4)이 배경(#FFFCF0)과
@@ -19,6 +19,24 @@ M.base46 = {
 	-- 	["@comment"] = { italic = true },
 	-- },
 }
+
+-- <A-i> 로 뜨는 floating terminal 크기.
+-- width/height 는 에디터 전체 대비 비율. row/col 은 좌상단 시작 위치라
+-- 가운데 정렬하려면 col = (1-width)/2, row = (1-height)/2 로 맞춰야 한다.
+-- 기본값: width=0.5, height=0.4, col=0.25, row=0.3
+M.term = {
+	float = {
+		relative = "editor",
+		width = 0.8,
+		height = 0.75,
+		col = 0.1, -- (1 - 0.8) / 2
+		row = 0.125, -- (1 - 0.75) / 2
+		border = "single",
+	},
+}
+
+-- 가로/세로 split terminal (<leader>h, <leader>v) 크기 비율
+-- M.term.sizes = { sp = 0.3, vsp = 0.2, ["bo sp"] = 0.3, ["bo vsp"] = 0.2 }
 
 -- M.nvdash = { load_on_startup = true }
 -- M.ui = {
