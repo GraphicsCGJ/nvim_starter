@@ -27,6 +27,15 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 --  end
 --})
 
+-- C/C++ 은 최대 120 컬럼: 가이드선 + gq/자동 줄바꿈 기준
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "c", "cpp", "objc", "objcpp", "cuda" },
+  callback = function()
+    vim.opt_local.colorcolumn = "120"
+    vim.opt_local.textwidth = 120
+  end,
+})
+
 -- 저장 직전 trailing whitespace 제거 (markdown 제외: 줄끝 2공백 = <br>)
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
