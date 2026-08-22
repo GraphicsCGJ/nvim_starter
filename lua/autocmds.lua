@@ -36,15 +36,33 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- 저장 직전 trailing whitespace 제거 (markdown 제외: 줄끝 2공백 = <br>)
+-- 저장 직전 공백 정리
+--   1) NBSP(U+00A0) -> 일반 스페이스
+--   2) trailing whitespace 제거
+-- 제외: markdown(줄끝 2공백 = <br>), NBSP 가 의미를 갖는 포맷, 특수 버퍼
+local no_clean_ft = {
+  markdown = true,
+  tex = true,
+  plaintex = true,
+  html = true,
+  xml = true,
+  csv = true,
+  tsv = true,
+  diff = true,
+  gitcommit = false, -- 필요하면 true 로
+}
+
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function(args)
-    if vim.bo[args.buf].filetype == "markdown" then
+    local bo = vim.bo[args.buf]
+    if no_clean_ft[bo.filetype] or not bo.modifiable or bo.binary or bo.buftype ~= "" then
       return
     end
     local save = vim.fn.winsaveview()
-    vim.cmd([[silent! keeppatterns %s/\s\+$//e]])
+    -- \s 는 space/tab 만 매칭하므로 NBSP 는 따로 처리해야 한다
+    vim.cmd([[silent! keeppatterns keepjumps %s/\%u00a0/ /e]])
+    vim.cmd([[silent! keeppatterns keepjumps %s/\s\+$//e]])
     vim.fn.winrestview(save)
   end,
 })

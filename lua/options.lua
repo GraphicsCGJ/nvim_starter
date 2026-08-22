@@ -43,6 +43,7 @@ require("conform").setup({
     rust = { "rustfmt" },             -- rustup 의 rustfmt (cargo 동봉)
     c = { "clang_format" },           -- 아래 formatters.clang_format 설정 사용
     cpp = { "clang_format" },
+    cmake = { "cmake_format" },       -- 아래 formatters.cmake_format 설정 사용
   },
   formatters = {
     beautysh = { prepend_args = { "--indent-size", "2" } }, -- 들여쓰기 2칸 (기본 4칸)
@@ -53,6 +54,26 @@ require("conform").setup({
       prepend_args = {
         "--style=file",
         "--fallback-style={BasedOnStyle: LLVM, ColumnLimit: 120}",
+      },
+    },
+    -- CMake: 기본값(max_pargs_hwrap=6)은 인자가 6개 이하면 한 줄에 몰아쓰기(hwrap)를
+    -- 강제해서, 소스 목록을 한 줄씩 나눠 써도 매번 되돌려버린다.
+    -- 2로 낮춰 인자 3개부터는 세로로 펼치게 한다.
+    -- 다만 max_pargs_hwrap 만으로는 `add_library(my_lib STATIC a.cc b.cc)` 처럼
+    -- 소스가 2개고 80칼럼에 들어가면 한 줄로 남는다. always_wrap 에 나열한 명령은
+    -- 길이/개수와 무관하게 항상 펼쳐진다 (짧은 add_library(foo INTERFACE) 도 3줄이 됨).
+    -- 주의: clang_format 의 --style=file 과 달리, cmake-format 은 CLI 플래그가
+    -- 프로젝트 .cmake-format.yaml 보다 우선한다 (config 로드 후 legacy_consume 로 덮어씀).
+    -- 팀 프로젝트에서 저장소 설정을 따라야 하면 이 prepend_args 를 지울 것.
+    cmake_format = {
+      prepend_args = {
+        "--always-wrap",
+        "add_library",
+        "add_executable",
+        "target_sources",
+        "target_link_libraries",
+        "--max-pargs-hwrap", "2",
+        "--dangle-parens", "true",
       },
     },
   },

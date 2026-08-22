@@ -23,6 +23,8 @@ vim.lsp.config('jinja_lsp', require("lsp.jinja_lsp"))
 vim.lsp.enable('jinja_lsp')
 vim.lsp.config('cmake', require("lsp.cmake"))
 vim.lsp.enable('cmake')
+vim.lsp.config('jsonls', require("lsp.jsonls"))
+vim.lsp.enable('jsonls')
 
 vim.lsp.enable("html")
 vim.lsp.enable("cssls")
