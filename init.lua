@@ -1,6 +1,17 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 
+-- WSL: pin the clipboard provider so Neovim skips auto-detection. Every
+-- executable() probe for a missing tool (wl-copy, xsel, win32yank.exe, ...)
+-- walks the /mnt/c/* entries in $PATH, which cost 0.5s~5s at startup.
+-- Mirrors what auto-detection would pick: "tmux" inside tmux, or outside tmux
+-- when a tmux server is running (`tmux list-buffers` succeeds).
+if vim.fn.has "wsl" == 1 and vim.fn.executable "tmux" == 1 then
+  if vim.env.TMUX or vim.system({ "tmux", "list-buffers" }, { timeout = 2000 }):wait().code == 0 then
+    vim.g.clipboard = "tmux"
+  end
+end
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 

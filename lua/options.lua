@@ -15,6 +15,10 @@ require "nvchad.options"
 --------------------------------------------
 --------------------------------------------
 require("nvim-treesitter.configs").setup({
+  -- `helm` has no Vim syntax file in the runtime, so tree-sitter is the only highlighter
+  -- for Helm templates / helmfile gotmpl (filetype set in ~/.config/nvim/filetype.lua).
+  -- `yaml` is what `helm` injects for the non-template parts.
+  ensure_installed = { "yaml", "helm" },
 })
 
 --------------------------------------------
