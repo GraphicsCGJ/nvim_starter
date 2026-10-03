@@ -32,8 +32,33 @@ return {
   },
 
   -- These are some examples, uncomment them if you want to see them work!
+  -- Picks the per-kind Kubernetes schema (yannh/kubernetes-json-schema) from `apiVersion`/`kind`
+  -- and hands it to yamlls. Wired into yamlls in lua/lsp/yamlls.lua via setup_client().
+  {
+    "cenk1cenk2/schema-companion.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    lazy = true,
+    config = function()
+      require("schema-companion").setup({ log_level = vim.log.levels.WARN })
+
+      -- Matching runs only when yamlls attaches, so a manifest written from an empty buffer never
+      -- gets a schema. Re-match on InsertLeave/BufWritePost while the buffer still has none.
+      vim.api.nvim_create_autocmd({ "InsertLeave", "BufWritePost" }, {
+        group = vim.api.nvim_create_augroup("SchemaCompanionRematch", { clear = true }),
+        pattern = { "*.yaml", "*.yml" },
+        callback = function(args)
+          local sc = require("schema-companion")
+          if sc.get_current_schemas(args.buf) == nil then
+            pcall(sc.match, args.buf)
+          end
+        end,
+      })
+    end,
+  },
+
   {
     "neovim/nvim-lspconfig",
+    dependencies = { "cenk1cenk2/schema-companion.nvim" },
     config = function()
       require "configs.lspconfig"
     end,

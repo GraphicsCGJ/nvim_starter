@@ -131,13 +131,15 @@ LSP 서버 / 린터 / 포맷터는 Mason 이 따로 설치하며 `lazy-lock.json
 | 파일 | filetype | 동작하는 도구 |
 |------|----------|---------------|
 | `<chart>/templates/*.yaml`, `*.tpl` (위에 `Chart.yaml` 이 있을 때) | `helm` | `helm_ls` (`.Values.*` 자동완성, 정의 이동). yamllint/포맷터는 적용되지 않음 |
-| `*.k8s.yaml`, `**/k8s/**`, `**/manifests/**`, `playground/mon2/steps/**` | `yaml` | yamlls + k8s 스키마 (필드 자동완성, 오타·타입 검증), yamllint |
+| `apiVersion` 과 `kind` 가 있는 YAML (경로 무관) | `yaml` | yamlls + kind 별 k8s 스키마 (`kind` 아래 필드 자동완성, 오타·타입 검증), yamllint |
 | 그 밖의 YAML (`values.yaml`, compose, CI) | `yaml` | yamlls (SchemaStore), yamllint |
 
-- k8s 스키마를 적용할 경로는 `lua/lsp/yamlls.lua` 의 `schemas.kubernetes` 에서 바꾼다.
-- 경로 규칙 밖의 파일 하나에만 적용하려면 파일 첫 줄에 kind 별 스키마 URL 을 modeline 으로 둔다
-  (`$schema=kubernetes` 나 `all.json` 은 동작하지 않거나 "Matches multiple schemas" 오류가 난다):
-  `# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1-standalone-strict/deployment-apps-v1.json`
+- k8s 스키마는 `schema-companion.nvim` 이 파일의 `apiVersion`/`kind` 를 읽어 kind 별 스키마
+  (yannh/kubernetes-json-schema, CRD 는 datreeio/CRDs-catalog)를 yamlls 에 연결한다. 설정은 `lua/lsp/yamlls.lua`.
+- yamlls 기본 `kubernetes` 스키마는 모든 kind 를 합친 스키마라서 검증만 되고 `spec:` 아래 자동완성이 되지 않는다.
+  그래서 쓰지 않는다.
+- 빈 파일에서 새로 쓸 때는 `apiVersion`/`kind` 를 입력하고 Insert 모드를 벗어나거나 저장하면 스키마가 연결된다.
+- 수동 재매칭: `:lua require("schema-companion").match()`, 현재 스키마 확인: `:lua print(require("schema-companion").get_current_schemas())`
 
 # Credits
 

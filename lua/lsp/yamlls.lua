@@ -58,25 +58,24 @@
 ---   }
 --- })
 --- ```
-return {
-  cmd = { 'yaml-language-server', '--stdio' },
-  filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.helm-values' },
-  root_markers = { '.git' },
-  settings = {
-    -- https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting
-    redhat = { telemetry = { enabled = false } },
-    yaml = {
-      -- `kubernetes` is yamlls's built-in k8s schema (kind-aware completion/validation).
-      -- Scoped to manifest-looking paths only: a global "*.yaml" would validate
-      -- docker-compose, CI and Helm values files against the k8s schema too.
-      schemas = {
-        kubernetes = {
-          "*.k8s.yaml",
-          "**/k8s/**/*.yaml",
-          "**/manifests/**/*.yaml",
-          "**/playground/mon2/steps/**/*.yaml",
-        },
-      },
+-- Kubernetes manifests: schema-companion matches `apiVersion`/`kind` and sets the per-kind schema
+-- (full completion). The built-in `kubernetes` union schema only validated and is no longer used.
+local sc = require("schema-companion")
+
+return sc.setup_client(
+  sc.adapters.yamlls.setup({
+    sources = {
+      sc.sources.matchers.kubernetes.setup({ version = "master" }),
+      sc.sources.lsp.setup(),
     },
-  },
-}
+  }),
+  {
+    cmd = { 'yaml-language-server', '--stdio' },
+    filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab', 'yaml.helm-values' },
+    root_markers = { '.git' },
+    settings = {
+      -- https://github.com/redhat-developer/vscode-redhat-telemetry#how-to-disable-telemetry-reporting
+      redhat = { telemetry = { enabled = false } },
+    },
+  }
+)
