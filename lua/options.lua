@@ -18,7 +18,11 @@ require("nvim-treesitter.configs").setup({
   -- `helm` has no Vim syntax file in the runtime, so tree-sitter is the only highlighter
   -- for Helm templates / helmfile gotmpl (filetype set in ~/.config/nvim/filetype.lua).
   -- `yaml` is what `helm` injects for the non-template parts.
-  ensure_installed = { "yaml", "helm" },
+  -- 아래는 이 머신에서 쓰는 parser 목록이다. fresh clone 도 동일 parser 를 설치한다.
+  ensure_installed = {
+    "c", "cpp", "go", "helm", "lua", "luadoc", "markdown", "markdown_inline",
+    "meson", "printf", "python", "vim", "vimdoc", "yaml",
+  },
 })
 
 --------------------------------------------

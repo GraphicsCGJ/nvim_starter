@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "one_light",
+	theme = "everforest_light",
 
 	hl_override = {
 		-- flex-light: 기본 TelescopeSelection 음영(#f2efe4)이 배경(#FFFCF0)과

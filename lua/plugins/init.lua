@@ -46,46 +46,80 @@ return {
     dependencies = { "williamboman/mason.nvim" },
     event = "VeryLazy",
     config = function()
+      local tools = {
+        "bash-language-server",
+        "beautysh",
+        "clangd",
+        "css-lsp",
+        "docker-compose-language-service",
+        "docker-language-server",
+        "dockerfile-language-server",
+        "eslint-lsp",
+        "eslint_d",
+        "gofumpt",
+        "goimports",
+        "golangci-lint",
+        "golangci-lint-langserver",
+        "google-java-format",
+        "gopls",
+        "helm-ls",
+        "html-lsp",
+        "isort",
+        "jdtls",
+        "jinja-lsp",
+        "kotlin-debug-adapter",
+        "kotlin-language-server",
+        "ktfmt",
+        "ktlint",
+        "kube-linter",
+        "kubescape",
+        "lua-language-server",
+        "marksman",
+        "mesonlsp",
+        "pyright",
+        "ruff",
+        "rust-analyzer",
+        "templ",
+        "vtsls",
+        "yaml-language-server",
+        "yamlfix",
+        "yamlfmt",
+        "yamllint",
+      }
       require("mason-tool-installer").setup({
-        ensure_installed = {
-          "bash-language-server",
-          "beautysh",
-          "clangd",
-          "css-lsp",
-          "docker-compose-language-service",
-          "docker-language-server",
-          "dockerfile-language-server",
-          "eslint-lsp",
-          "eslint_d",
-          "gofumpt",
-          "goimports",
-          "golangci-lint",
-          "golangci-lint-langserver",
-          "google-java-format",
-          "gopls",
-          "html-lsp",
-          "isort",
-          "jdtls",
-          "jinja-lsp",
-          "kotlin-debug-adapter",
-          "kotlin-language-server",
-          "ktfmt",
-          "ktlint",
-          "lua-language-server",
-          "marksman",
-          "mesonlsp",
-          "pyright",
-          "ruff",
-          "rust-analyzer",
-          "vtsls",
-          "yaml-language-server",
-          "yamlfix",
-          "yamlfmt",
-          "yamllint",
-        },
+        ensure_installed = tools,
         run_on_start = true,
         auto_update = false,
       })
+      -- :MasonToolsDiff — :Mason 으로 직접 설치했지만 위 목록에 없는 도구(다른 머신에 동기화되지 않음)와
+      -- 목록에는 있지만 아직 설치되지 않은 도구를 보여준다.
+      vim.api.nvim_create_user_command("MasonToolsDiff", function()
+        local wanted = {}
+        for _, name in ipairs(tools) do
+          wanted[name] = true
+        end
+        local installed = require("mason-registry").get_installed_package_names()
+        local have = {}
+        local extra = {}
+        for _, name in ipairs(installed) do
+          have[name] = true
+          if not wanted[name] then
+            table.insert(extra, name)
+          end
+        end
+        local missing = {}
+        for _, name in ipairs(tools) do
+          if not have[name] then
+            table.insert(missing, name)
+          end
+        end
+        table.sort(extra)
+        local lines = {
+          "not in ensure_installed: " .. (#extra > 0 and table.concat(extra, ", ") or "(none)"),
+          "not installed yet:       " .. (#missing > 0 and table.concat(missing, ", ") or "(none)"),
+        }
+        vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO)
+      end, { desc = "Diff installed Mason packages against ensure_installed" })
     end,
   },
 

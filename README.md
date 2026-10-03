@@ -10,7 +10,7 @@
 ~/.config/nvim/
 ├── init.lua                   # 부트스트랩: lazy.nvim 설치 → NvChad 로드 → 테마 → options/autocmds/mappings
 └── lua/
-    ├── chadrc.lua             # NvChad 설정 (테마: tokyonight)
+    ├── chadrc.lua             # NvChad 설정 (테마: everforest_light)
     ├── options.lua            # vim 옵션 + treesitter/conform(포맷터) 초기 setup
     ├── autocmds.lua           # 자동명령 (yank 레지스터 순환, 저장 시 trailing whitespace 제거)
     ├── mappings.lua           # 키 매핑
@@ -77,8 +77,20 @@ M.base46 = {
 
 | 대상 | git 추적 | 재현 방법 |
 |------|----------|-----------|
-| **플러그인** (33개) | ✅ `lazy-lock.json` | 자동 — 아래 1번 |
-| **Mason 도구** (LSP/린터/포맷터) | ❌ 추적 안 됨 | 수동 — 아래 2번 |
+| **플러그인** | ✅ `lazy-lock.json` | 자동 — 아래 1번 |
+| **Mason 도구** (LSP/린터/포맷터) | ✅ `lua/plugins/init.lua` 의 `tools` 목록 | 자동 — 아래 2번 |
+| **Treesitter parser** | ✅ `lua/options.lua` 의 `ensure_installed` | 자동 — 아래 3번 |
+
+새 머신에서 한 번에 받기 (nvim 을 켜지 않고 설치까지 끝냄):
+
+```bash
+git clone git@github.com:GraphicsCGJ/nvim_starter.git ~/.config/nvim
+nvim --headless "+Lazy! restore" +qa                                   # 플러그인 (lazy-lock.json 커밋 그대로)
+nvim --headless "+Lazy! load all" "+MasonToolsInstallSync" +qa          # Mason 도구
+nvim --headless "+Lazy! load all" "+TSUpdateSync" +qa                   # Treesitter parser
+```
+
+다른 머신에서 바뀐 설정 받기: `git -C ~/.config/nvim pull` 후 nvim 을 켜면 누락된 도구와 parser 가 자동 설치된다.
 
 ### 1. 플러그인 — `lazy-lock.json` 그대로 받기
 
@@ -97,12 +109,33 @@ nvim                       # 첫 실행 시 lazy.nvim 이 lazy-lock.json 에 고
 ### 2. Mason 도구 — `lazy-lock.json 에 포함되지 않음`
 
 LSP 서버 / 린터 / 포맷터는 Mason 이 따로 설치하며 `lazy-lock.json` 에는 잡히지 않는다.
-대신 `WhoIsSethDaniel/mason-tool-installer.nvim` 의 `ensure_installed` 목록
+대신 `WhoIsSethDaniel/mason-tool-installer.nvim` 의 `tools` 목록
 (`lua/plugins/init.lua`)으로 git 관리되며, **nvim 실행 시 누락된 도구가 자동 설치**된다.
 
 - 새 머신: nvim 을 한 번 켜면 끝. (필요하면 `:MasonToolsInstall` 수동 실행)
-- 도구 추가/제거: `lua/plugins/init.lua` 의 `ensure_installed` 만 수정 (이 README 갱신 불필요).
+- 도구 추가/제거: `lua/plugins/init.lua` 의 `tools` 만 수정 (이 README 갱신 불필요).
+- `:Mason` 화면에서 직접 설치했다면 `:MasonToolsDiff` 로 목록에 빠진 도구를 확인하고 `tools` 에 추가한 뒤 커밋한다.
+  목록에 없으면 다른 머신에는 설치되지 않는다.
 - 일괄 업데이트: `:MasonToolsUpdate` (또는 spec 에서 `auto_update = true`).
+
+### 3. Treesitter parser
+
+`:TSInstall <lang>` 으로 직접 설치한 parser 도 다른 머신에는 따라가지 않는다.
+`lua/options.lua` 의 `ensure_installed` 에 추가해 두면 nvim 실행 시 자동 설치된다.
+현재 설치된 parser 목록은 `:TSInstallInfo` 로 확인한다.
+
+# Helm / Kubernetes YAML
+
+| 파일 | filetype | 동작하는 도구 |
+|------|----------|---------------|
+| `<chart>/templates/*.yaml`, `*.tpl` (위에 `Chart.yaml` 이 있을 때) | `helm` | `helm_ls` (`.Values.*` 자동완성, 정의 이동). yamllint/포맷터는 적용되지 않음 |
+| `*.k8s.yaml`, `**/k8s/**`, `**/manifests/**`, `playground/mon2/steps/**` | `yaml` | yamlls + k8s 스키마 (필드 자동완성, 오타·타입 검증), yamllint |
+| 그 밖의 YAML (`values.yaml`, compose, CI) | `yaml` | yamlls (SchemaStore), yamllint |
+
+- k8s 스키마를 적용할 경로는 `lua/lsp/yamlls.lua` 의 `schemas.kubernetes` 에서 바꾼다.
+- 경로 규칙 밖의 파일 하나에만 적용하려면 파일 첫 줄에 kind 별 스키마 URL 을 modeline 으로 둔다
+  (`$schema=kubernetes` 나 `all.json` 은 동작하지 않거나 "Matches multiple schemas" 오류가 난다):
+  `# yaml-language-server: $schema=https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.32.1-standalone-strict/deployment-apps-v1.json`
 
 # Credits
 
