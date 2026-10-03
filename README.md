@@ -140,6 +140,8 @@ LSP 서버 / 린터 / 포맷터는 Mason 이 따로 설치하며 `lazy-lock.json
   그래서 쓰지 않는다.
 - 빈 파일에서 새로 쓸 때는 `apiVersion`/`kind` 를 입력하고 Insert 모드를 벗어나거나 저장하면 스키마가 연결된다.
 - 수동 재매칭: `:lua require("schema-companion").match()`, 현재 스키마 확인: `:lua print(require("schema-companion").get_current_schemas())`
+- yamllint 는 저장소의 완화 설정 `yamllint.yaml` 을 쓴다 (`lua/configs/lint.lua` 에서 `$YAMLLINT_CONFIG_FILE` 로 지정).
+  프로젝트에 `.yamllint` 가 있으면 그 설정이 우선한다.
 
 # Credits
 

@@ -1,0 +1,25 @@
+# Relaxed yamllint defaults for editing in nvim (k8s manifests, Helm values, compose, CI).
+# Loaded through $YAMLLINT_CONFIG_FILE (set in lua/configs/lint.lua), so a project's own
+# .yamllint / .yamllint.yaml / .yamllint.yml still takes precedence.
+extends: default
+
+rules:
+  # k8s manifests and Helm values rarely start with `---`.
+  document-start: disable
+  # Image refs, URLs and descriptions are long; warn only past 160.
+  line-length:
+    max: 160
+    level: warning
+  # Commented-out YAML (`#key: value`, Helm values) is common; keep the 1-space gap before inline comments.
+  comments:
+    require-starting-space: false
+    min-spaces-from-content: 1
+  comments-indentation: disable
+  # Allow both `{app: web}` and `{ app: web }`.
+  braces:
+    max-spaces-inside: 1
+  brackets:
+    max-spaces-inside: 1
+  # `on:` in GitHub Actions and `yes/no` values should not be flagged as keys.
+  truthy:
+    check-keys: false
