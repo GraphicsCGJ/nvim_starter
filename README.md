@@ -1,3 +1,5 @@
+> 여러 머신 사이의 동기화 명령은 [SYNC.md](SYNC.md) 에 정리되어 있습니다.
+
 **This repo is supposed to be used as config by NvChad users!**
 
 - The main nvchad repo (NvChad/NvChad) is used as a plugin by this repo.
